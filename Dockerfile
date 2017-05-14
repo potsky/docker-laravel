@@ -21,12 +21,16 @@ RUN apt-get update
 # Install basics
 RUN apt-get update && apt-get install -y \
 apt-utils \
+curl \
 wget
 
 # Add dotdeb
 RUN echo "deb http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list
 RUN echo "deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list
 RUN wget https://www.dotdeb.org/dotdeb.gpg && apt-key add dotdeb.gpg && rm dotdeb.gpg
+
+# Add nodesource
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 
 # Update the repository sources list
 # Install basics again
@@ -39,10 +43,8 @@ RUN wget https://www.dotdeb.org/dotdeb.gpg && apt-key add dotdeb.gpg && rm dotde
 RUN apt-get update && apt-get install -y \
 zsh \
 git \
-curl \
 vim \
 htop \
-curl \
 vim \
 htop \
 mysql-server \
@@ -66,8 +68,7 @@ php7.0-curl \
 php7.0-zip \
 php7.0-bz2 \
 telnet \
-node \
-npm
+nodejs
 
 
 # Run oh my zsh
@@ -92,6 +93,9 @@ RUN echo "TZ='Europe/Paris'; export TZ" >> /etc/profile
 
 RUN echo "" >> /etc/zsh/zshrc
 RUN echo "TZ='Europe/Paris'; export TZ" >> /etc/zsh/zshrc
+
+# Configure MySQL
+ADD config/mysql/debian.cfg /etc/mysql/debian.cfg
 
 # Configure Apache
 RUN a2enmod rewrite

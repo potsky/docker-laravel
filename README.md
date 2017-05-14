@@ -35,9 +35,17 @@ Tools are :
 - [PHPinfo](http://localhost:2780/app_tools/php_info.php)
 - [MailDev](http://localhost:2790)
 
-Laravel default queue is automatically executed in a background daemon via `php /app/artisan queue:work redis --sleep=3 --tries=3`
+### 2.1 Quit container
 
 Simply `exit` from the shell to stop the container.
+
+### 2.2 Laravel Queue
+
+Laravel default queue is automatically executed in a background daemon via `php /app/artisan queue:work redis --sleep=3 --tries=3`
+
+### 2.3 xDebug
+
+On MacOS, the default docker host IP address is `192.168.65.1`. On other systems, you should set your computr address in file `/etc/php/7.0/apache2/conf.d/20-xdebug.ini` to use xdebug.
 
 ### 3. Connect
 
@@ -105,9 +113,3 @@ docker run --rm -v /path/to/your/laravel/app:/app -i -p 2780:80 -p 2722:22 -t my
 ```
 
 ---
-
-### ToDo
-
-- install logrotate
-- test xdebug
-
