@@ -68,6 +68,7 @@ php7.0-curl \
 php7.0-zip \
 php7.0-bz2 \
 telnet \
+unzip \
 nodejs
 
 
@@ -76,6 +77,7 @@ RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -
 
 # Configure System
 ADD config/system/rc.local /etc/rc.local
+ADD config/system/motd /etc/motd
 
 # Configure Supervisord
 ADD config/supervisor/app.conf /etc/supervisor/conf.d/app.conf
@@ -93,6 +95,14 @@ RUN echo "TZ='Europe/Paris'; export TZ" >> /etc/profile
 
 RUN echo "" >> /etc/zsh/zshrc
 RUN echo "TZ='Europe/Paris'; export TZ" >> /etc/zsh/zshrc
+RUN echo "" >> /etc/zsh/zshrc
+RUN echo "myip() { ip addr show | grep inet | grep eth0 | awk '{print \$2}' | cut -d'/' -f1 }" >> /etc/zsh/zshrc
+RUN echo "" >> /etc/zsh/zshrc
+RUN echo 'alias aa="tail -100f /var/log/apache2/access.log"' >> /etc/zsh/zshrc
+RUN echo 'alias ae="tail -100f /var/log/apache2/error.log"' >> /etc/zsh/zshrc
+RUN echo 'alias phpunit="vendor/bin/phpunit"' >> /etc/zsh/zshrc
+RUN echo 'alias art="php artisan"' >> /etc/zsh/zshrc
+RUN echo 'alias xdebug="export XDEBUG_CONFIG=\"idekey=PHPSTORM\""' >> /etc/zsh/zshrc
 
 # Configure MySQL
 ADD config/mysql/debian.cfg /etc/mysql/debian.cfg
@@ -118,8 +128,12 @@ ADD files/gitignore-global /root/.gitignore-global
 RUN git config --global core.excludesfile ~/.gitignore-global
 RUN git config --global --add oh-my-zsh.hide-dirty 1
 
+# Ngrok
+ADD files/ngrok /usr/local/bin/ngrok
+RUN chmod +x /usr/local/bin/ngrok
+
 # Install PHPMyAdmin
-RUN cd /var/www/html; git clone https://github.com/phpmyadmin/phpmyadmin.git;
+RUN cd /var/www/html; git clone --depth=1 https://github.com/phpmyadmin/phpmyadmin.git;
 RUN cd /var/www/html/phpmyadmin; composer install
 ADD config/phpmyadmin/config.inc.php /var/www/html/phpmyadmin/config.inc.php
 
