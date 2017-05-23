@@ -77,7 +77,7 @@ If you run the image with the `-v mysql:/var/lib/mysql` option, the database wil
 If you have deleted all containers, run `docker volume prune` to remove all orphan volumes.
 
 #### 3.2 SMTP
-
+ 
 In your laravel `.env` file, you just have to use this :
 
 ```
