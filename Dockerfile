@@ -148,6 +148,11 @@ ADD config/phpredmin/config.php /var/www/html/phpredmin/config.php
 # Install MailDev
 RUN npm install -g maildev
 
+# Envoy
+RUN composer global require "laravel/envoy=~1.0"
+RUN echo "" >> /root/.zshrc
+RUN echo "export PATH=\$HOME/.composer/vendor/bin:\$HOME/bin:/usr/local/bin:\$PATH" >> /root/.zshrc
+
 # Set correct rights
 RUN chown -R www-data:www-data /var/www/html
 
