@@ -15,6 +15,8 @@ It does not respect the single process docker style but this is the best way to 
 
 ### 2. Run
 
+You need first to pull the image via `docker pull potsky/laravel`, then run the image :
+
 ```
 docker run \
 	-v /path/to/your/laravel/app:/app \
@@ -26,7 +28,7 @@ docker run \
 	potsky/laravel
 ```
 
-Then go to <http://localhost:2780> on your computer.
+Finally go to <http://localhost:2780> on your computer.
 
 Tools are :
 
@@ -34,6 +36,10 @@ Tools are :
 - [PHPRedmin](http://localhost:2780/app_tools/phpredmin/public/)
 - [PHPinfo](http://localhost:2780/app_tools/php_info.php)
 - [MailDev](http://localhost:2790)
+
+> On Windows, run 
+>
+> `docker run --rm -v /c/Users/path/to/your/folder:/app -v mysql:/var/lib/mysql -p 2780:80 -p 2722:22 -p 2790:1080 -ti potsky/laravel`
 
 ### 2.1 Quit container
 
